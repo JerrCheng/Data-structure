@@ -1,3 +1,4 @@
+法一
 struct ListNode* removeElements(struct ListNode* head, int val){
      struct ListNode*prev = NULL;
      struct ListNode*cur = head;
@@ -28,3 +29,36 @@ struct ListNode* removeElements(struct ListNode* head, int val){
      }
      return head;
 }
+
+
+
+法二
+struct ListNode* tail = NULL;
+struct ListNode*cur  =head;
+head = NULL;
+whlie(cur)
+{
+  if(cur->val == val)
+   {
+    struct ListNode*del = cur;
+    cur = cur->next;
+   free(del);
+   }
+  else
+   {
+     //尾插
+    if(tail == NULL)
+       {
+	head = tail = cur;
+        }
+   else
+        {
+              tail->next = cur;
+              tail=tail->next;
+         }
+             cur = cur->next;
+   }
+}
+ if(tail)
+   tail->next = NULL;
+return head;
