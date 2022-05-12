@@ -1,0 +1,35 @@
+struct ListNode* reverseList(struct ListNode* head){
+struct ListNode*newhead = NULL;
+struct ListNode* cur = head;
+while(cur)
+{
+    struct ListNode*next = cur->next;
+    cur->next = newhead;
+    newhead = cur;
+    cur = next;
+}
+return newhead;
+}
+
+法二：倒向指针
+struct ListNode* reverseList(struct ListNode* head){
+  if(head == NULL)
+  return NULL;
+
+  struct ListNode*n1,*n2,*n3;
+  n1 = NULL;
+  n2 = head;
+  n3 = n2->next;
+  while(n2)
+  {
+      //倒指向
+      n2->next = n1;
+
+      //迭代
+      n1 = n2;
+      n2 = n3;
+      if(n3)
+      n3 = n3->next;
+  }
+   return n1;
+}
