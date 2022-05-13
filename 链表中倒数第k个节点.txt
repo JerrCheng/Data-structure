@@ -1,0 +1,18 @@
+struct ListNode* FindKthToTail(struct ListNode* pListHead, int k ) {
+    struct ListNode*slow,*fast;
+    slow=fast=pListHead;
+    //fast先走k步
+    while(k--)
+    {
+       if(fast==NULL) //链表的长度小于k
+           return NULL;
+        
+        fast = fast->next;
+    }
+    while(fast)
+    {
+     slow = slow->next;
+     fast = fast->next;
+    }
+    return slow;
+}
