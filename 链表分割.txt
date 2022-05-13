@@ -1,0 +1,42 @@
+//开辟哨兵头结点
+        struct ListNode* lessHead = (struct ListNode*)malloc(sizeof(struct ListNode));
+    struct ListNode* bigHead =  (struct ListNode*)malloc(sizeof(struct ListNode));
+    struct ListNode* bigTail =bigHead;
+    struct ListNode* lessTail =lessHead;
+    struct ListNode* cur = pHead;
+ 
+    if(cur==NULL)   return NULL;
+    if(cur->next==NULL)     return pHead;
+    while(cur)
+    {
+        if( cur->val < x)
+        {
+            if(lessHead==NULL)
+            {
+                lessHead = lessTail =  cur;//带哨兵的
+            }
+            else
+            {
+                lessTail->next = cur;
+                lessTail = cur;
+            }
+            cur = cur->next;
+        }
+        else
+        {
+            if(bigHead==NULL)
+            {
+                bigHead  = bigTail =  cur;//带哨兵的
+                 
+            }
+            else
+            {
+                bigTail->next = cur;
+                bigTail = cur;
+            }
+            cur = cur ->next ;
+        }
+    }
+    bigTail ->next = NULL;
+    lessTail->next = bigHead->next;
+    return lessHead->next;
