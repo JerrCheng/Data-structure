@@ -1,0 +1,23 @@
+返回环形链表入口，一个指针从相遇点走，另一个指针从头开始走，在入口相遇
+
+struct ListNode *detectCycle(struct ListNode *head) {
+    struct ListNode*fast,*slow;
+    fast = slow = head;
+    while(fast && fast->next)
+    {
+        slow = slow->next;
+        fast = fast->next->next;
+       if(fast == slow)
+       {
+            struct ListNode*meet = slow;
+            while(meet != head)
+            {
+                meet = meet->next;
+                head = head->next;
+            }
+            return meet;
+       }
+    }
+    return NULL;
+    
+}
