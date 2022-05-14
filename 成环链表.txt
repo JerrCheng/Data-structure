@@ -1,0 +1,18 @@
+
+成环问题即追及问题，当慢指针与快指针相遇时，即可判断成环
+
+bool hasCycle(struct ListNode *head) {
+    struct ListNode*fast,*slow;
+    fast= slow = head;
+    while(fast && fast->next)
+    {
+        slow= slow->next;
+        fast = fast->next->next;
+        if(slow == fast)
+        {
+            return true;
+        }
+       
+    }
+     return false;
+}
