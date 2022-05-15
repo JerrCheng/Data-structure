@@ -30,6 +30,7 @@ LTNode* ListInit()
 	return phead;
 }
 
+
 //尾插
 void ListPusahBack(LTNode* phead, LTDataType x)
 {
