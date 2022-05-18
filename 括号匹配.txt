@@ -1,0 +1,41 @@
+bool isValid(char * s){
+    ST st;
+    StackInit(&st);
+    while(*s)
+    {
+        if(*s== '(' || *s == '{' || *s == '[')
+        {
+            StackPush(&st,*s);
+            ++s;
+        }
+        else
+        {
+            if(StackEmpty(&st))
+            {
+                StackDestory(&st);
+                return false;
+            }
+          
+                
+           STDataType top = StackTop(&st);
+            StackPop(&st);
+
+            if((top == '[' && *s == ']')
+            || (top == '(' && *s == ')')
+            || (top == '{' && *s == '}'))
+            
+            ++s;
+            
+            else
+            {
+                StackDestory(&st);
+                return false;
+            }
+           
+        }
+    }
+    bool ret = StackEmpty(&st); //判断是否为空，防止只有半个括号的情况
+StackDestory(&st);
+return ret;
+
+}
