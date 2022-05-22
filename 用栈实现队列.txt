@@ -1,0 +1,131 @@
+这里包括栈的实现
+#include<stdio.h>
+#include<stdlib.h>
+#include<assert.h>
+#include<stdbool.h>
+typedef int STDataType;
+typedef struct Stack {
+	STDataType* a;
+	int top;
+	int capacity;
+}Stack;
+//初始化
+void StackInit(Stack* ps);
+//入棧
+void StackPush(Stack* ps, STDataType x);
+//出棧
+void StackPop(Stack* ps);
+//销毁
+void StackDestroy(Stack* ps);
+//查看栈顶元素
+STDataType StackTop(Stack* ps);
+//查看栈元素个数
+int StackSize(Stack* ps);
+//判空操作
+bool StackEmpty(Stack* ps);
+//初始化
+void StackInit(Stack* ps) {
+	ps->a = NULL;
+	ps->top = 0;
+	ps->capacity = 0;
+}
+//入棧
+void StackPush(Stack* ps, STDataType x) {
+	assert(ps);
+	if (ps->top == ps->capacity) {
+		int newcapcity = ps->capacity == 0 ? 4 : ps->capacity * 2;
+		STDataType*new= (STDataType*)realloc(ps->a, sizeof(STDataType) * newcapcity);
+		if (new == NULL) {
+			printf("realloc failed!");
+			exit(-1);
+		}
+		ps->a = new;
+		ps->capacity = newcapcity;
+	}
+	ps->a[ps->top] = x;
+	ps->top++;
+ 
+}//出棧
+void StackPop(Stack* ps) {
+	assert(ps);
+	ps->top--;
+	return ;
+}
+//销毁
+void StackDestroy(Stack* ps) {
+	free(ps->a);
+}
+//查看栈顶元素
+STDataType StackTop(Stack* ps) {
+	assert(ps);
+	if (ps->top == 0)return -1;
+	return ps->a[ps->top - 1];
+}
+//查看栈元素个数
+int StackSize(Stack* ps) {
+	assert(ps);
+	return ps->top;
+}
+//判空操作
+bool StackEmpty(Stack* ps) {
+	assert(ps);
+	if (ps->top == 0)return true;
+	return false;
+}
+typedef struct {
+Stack *PushQueue;
+Stack *PopQueue;
+} MyQueue;
+ 
+MyQueue* myQueueCreate() {
+	MyQueue* new = (MyQueue*)malloc(sizeof(MyQueue));
+    if (new == NULL) {
+		printf("malloc failed");
+		exit(-1);
+	}
+    new->PushQueue = (Stack*)malloc(sizeof(Stack));
+	new->PopQueue = (Stack*)malloc(sizeof(Stack));
+	StackInit(new->PushQueue);
+	StackInit(new->PopQueue);
+	return new;
+}
+ 
+void myQueuePush(MyQueue* obj, int x) {
+	StackPush(obj->PushQueue, x);
+}
+ 
+int myQueuePop(MyQueue* obj) {
+	if (StackSize(obj->PopQueue) == 0) {
+		while (StackSize(obj->PushQueue) != 0) {
+			StackPush(obj->PopQueue, StackTop(obj->PushQueue));
+			StackPop(obj->PushQueue);
+		}
+	}	
+	int pop = StackTop(obj->PopQueue);
+	StackPop(obj->PopQueue);
+	return pop;
+}
+ 
+int myQueuePeek(MyQueue * obj) {
+		if (StackSize(obj->PopQueue) == 0) {
+			while (StackSize(obj->PushQueue) != 0) {
+				StackPush(obj->PopQueue, StackTop(obj->PushQueue));
+				StackPop(obj->PushQueue);
+			}
+		}
+        return StackTop(obj->PopQueue);
+}
+bool myQueueEmpty(MyQueue * obj){
+		return StackEmpty(obj->PopQueue)&&StackEmpty(obj->PushQueue);
+}
+ 
+void myQueueFree(MyQueue * obj) {
+		while (myQueueEmpty(obj) == false) {
+			myQueuePop(obj);
+		}
+		free(obj->PushQueue->a);
+		free(obj->PopQueue->a);
+		free(obj->PushQueue);
+		free(obj->PopQueue);
+		free(obj);
+}
