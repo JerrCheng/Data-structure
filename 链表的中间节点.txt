@@ -1,0 +1,16 @@
+
+快慢指针
+
+struct ListNode* middleNode(struct ListNode* head){
+    struct ListNode*fast,*slow;
+    fast = slow = head;
+
+    //偶数时返回第二个中间节点，故加个fast走到NULL
+    while(fast && fast->next)
+    {
+        slow= slow->next;
+        fast = fast->next->next;
+    }
+    return slow;
+
+}
