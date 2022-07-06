@@ -30,3 +30,43 @@ struct ListNode* removeElements(struct ListNode* head, int val){
     }
     return head;
 }
+
+
+
+
+
+法二   移动到新链表
+struct ListNode* removeElements(struct ListNode* head, int val){
+    struct ListNode*tail = NULL;
+    struct ListNode*cur = head;
+
+    //哨兵位的头结点
+    head = tail = (struct ListNode*)malloc(sizeof(struct ListNode));
+    tail->next = NULL;
+
+    while(cur)
+    {
+        if(cur->val == val)
+        {
+            //删除val
+            struct ListNode*del = cur;
+            cur = cur->next;
+            free(del);
+        }
+         else
+                {
+                    tail->next = cur;
+                    tail = tail->next;
+                     cur = cur->next;
+                }
+
+            
+    }
+ 
+    tail->next = NULL;
+    struct ListNode*del = head;
+    head = head->next;
+    free(del);
+
+    return head;
+}
