@@ -1,0 +1,212 @@
+#define _CRT_SECURE_NO_WARNINGS 1
+#include"SList.h"
+
+void SLPrint(SLTNode* phead)
+{
+	SLTNode* cur = phead;
+	while (cur != NULL)
+	{
+		printf("%d->", cur->data);
+		cur = cur->next;
+	}
+	printf("NULL\n");
+}
+
+
+
+//创建新节点
+SLTNode* BuySLNode(SLDataType x)
+{
+	SLTNode* newnode = (SLTNode*)malloc(sizeof(SLTNode));
+	assert(newnode);
+	newnode->data = x;
+	newnode->next = NULL;
+
+	return newnode;
+}
+
+
+
+//尾插
+void SLPushBack(SLTNode** pphead, SLDataType x)
+{
+	SLTNode*newnode = BuySLNode(x);
+
+	if (*pphead == NULL)
+	{
+		*pphead = newnode;
+	}
+
+	else
+	{
+		//找尾结点
+		SLTNode* tail = *pphead;
+		while (tail->next != NULL)
+		{
+			tail = tail->next;
+		}
+
+		tail->next = newnode;
+	}
+
+}
+
+
+//头插
+void SLPushFront(SLTNode** pphead, SLDataType x)
+{
+	SLTNode* newnode = BuySLNode(x);
+	newnode->next = *pphead;
+	*pphead = newnode;
+}
+
+
+
+//尾删
+void SLPopBack(SLTNode** pphead)
+{
+	assert(*pphead);
+
+	//只有一个结点
+	if ((*pphead)->next == NULL)
+	{
+		free(*pphead);
+		*pphead = NULL;
+	}
+
+	else
+	{
+		SLTNode* tailPrev = NULL;
+		SLTNode* tail = *pphead;
+
+		//找尾结点
+		while (tail->next != NULL)
+		{
+			tailPrev = tail;
+			tail = tail->next;
+		}
+		free(tail);
+		tailPrev->next = NULL;
+	}
+	
+}
+
+
+
+
+//头删
+void SLPopFront(SLTNode** pphead)
+{
+	assert(*pphead != NULL);
+	SLTNode* next = (*pphead)->next;
+	free(*pphead);
+	*pphead = next;
+}
+
+
+
+
+//查找 修改
+SLTNode* SLFind(SLTNode* phead, SLDataType x)
+{
+	SLTNode* cur = phead;
+	while (cur)
+	{
+		if (cur->data == x)
+			return cur;
+		cur = cur->next;
+	}
+	return NULL;
+}
+
+
+
+
+//在pos位置之前插入
+void SLInsert(SLTNode** pphead, SLTNode* pos, SLDataType x)
+{
+	assert(pos);
+	assert(pphead);
+	//头插
+	if (pos == *pphead)
+	{
+		SLPushFront(pphead,x);
+	}
+
+	else
+	{
+		SLTNode* prev = *pphead;
+		while (prev->next != pos)
+		{
+			prev = prev->next;
+		}
+		SLTNode* newnode = BuySLNode(x);
+		prev->next = newnode;
+		newnode->next = pos;
+	}
+}
+
+
+
+
+//在pos位置之后插入
+void SLInsertAfter(SLTNode* pos, SLDataType x)
+{
+	assert(pos);
+
+	//注意链接顺序
+	SLTNode* newnode = BuySLNode(x);
+	newnode->next = pos->next;
+	pos->next = newnode;
+
+
+	////不在意链接顺序
+	//SLTNode* next = pos->next;
+	//SLTNode* newnode = BuySLNode(x);
+
+	//pos->next = newnode;
+	//newnode->next = next;
+
+}
+
+
+
+//在pos位置删除
+void SLErase(SLTNode** pphead, SLTNode* pos)
+{
+	assert(pos);
+	assert(pphead);
+	if (*pphead == pos)
+	{
+		SLPopFront(pphead);
+	}
+	else
+	{
+		SLTNode* prev = *pphead;
+		while (prev->next != pos)
+		{
+			prev = prev->next;
+		}
+
+		prev->next = pos->next;
+		free(pos);
+		pos = NULL;
+	}
+}
+
+
+
+
+//在pos位置之后删除
+void SLEraseAfter(SLTNode* pos)
+{
+	assert(pos);
+	if (pos->next == NULL)
+	{
+		return;
+	}
+	SLTNode* next = pos->next;
+	pos->next = next->next;
+	free(next);
+	next = NULL;
+}
