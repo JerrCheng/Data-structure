@@ -1,0 +1,33 @@
+  尾插法  创建两个链表，一个放比x小的，另一个放比x大的
+
+  ListNode* partition(ListNode* pHead, int x) {
+        struct ListNode*lesshead,*lesstail,*greaterhead,*greatertail;
+        greaterhead = greatertail = (struct ListNode*)malloc(sizeof(struct ListNode));
+        lesshead = lesstail = (struct ListNode*)malloc(sizeof(struct ListNode));
+        lesstail->next = greatertail->next = NULL;
+        
+        struct ListNode*cur = pHead;
+        
+        while(cur)
+        {
+            if(cur->val < x)
+            {
+                lesstail->next = cur;
+                lesstail = lesstail->next;
+            }
+            else
+            {
+                greatertail->next = cur;
+                greatertail = greatertail->next;
+            }
+                cur = cur->next;
+        }
+        
+                lesstail->next = greaterhead->next;
+                greatertail->next = NULL;
+                struct ListNode*head = lesshead->next;
+                free(greaterhead);
+                free(lesshead);
+                return head;
+    }
+};
