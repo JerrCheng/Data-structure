@@ -1,0 +1,66 @@
+回文：即为对称，这里需要用到之前的快慢指针，进行复用
+
+/*
+struct ListNode {
+    int val;
+    struct ListNode *next;
+    ListNode(int x) : val(x), next(NULL) {}
+};*/
+class PalindromeList {
+public:
+    struct ListNode* middleNode(struct ListNode* head){
+    struct ListNode* slow, *fast;
+    slow = fast = head;
+    while(fast && fast->next)
+    {
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+
+    return slow;
+    }
+    
+    struct ListNode* reverseList(struct ListNode* head){
+    if(head == NULL)
+        return NULL;
+        
+    struct ListNode* n1,*n2,*n3;
+    n1 = NULL;
+    n2 = head;
+    n3 = n2->next;
+    while(n2)
+    {
+        // 倒指向
+        n2->next = n1;
+
+        // 迭代
+        n1 = n2;
+        n2 = n3;
+        if(n3)
+            n3 = n3->next;
+    }
+
+    return n1;
+}
+    
+    bool chkPalindrome(ListNode* A) {
+        struct ListNode* head = A;
+        struct ListNode* mid = middleNode(head);
+        struct ListNode* rhead = reverseList(mid);
+        
+        while(head && rhead)
+        {
+            if(head->val != rhead->val)
+            {
+                return false;
+            }
+            else
+            {
+                head = head->next;
+                rhead = rhead->next;
+            }
+        }
+        
+        return true;
+    }
+};
