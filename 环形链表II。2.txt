@@ -1,0 +1,25 @@
+L = （N-1）*C + C - X
+
+struct ListNode *detectCycle(struct ListNode *head) {
+    struct ListNode *fast,*slow;
+    fast = slow = head;
+
+    while(fast && fast->next)
+    {
+
+        slow = slow->next;
+        fast = fast->next->next;
+
+        if(slow == fast)
+            {
+                struct ListNode *meet = slow;
+                while(meet != head)
+                {
+                    meet = meet->next;
+                    head = head->next;
+                }
+                return meet;
+            }
+    }
+    return NULL;
+}
