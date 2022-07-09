@@ -1,0 +1,50 @@
+struct ListNode *getIntersectionNode(struct ListNode *headA, struct ListNode *headB) {
+    if(headA == NULL || headB == NULL)
+    {
+        return NULL;
+    }
+    struct ListNode *curA = headA,*curB = headB;
+    int lenA = 1,lenB = 1;
+
+//计算差距步
+    while(curA->next)
+    {
+        lenA++;
+        curA = curA->next;
+    }
+    while(curB->next)
+    {
+        lenB++;
+        curB = curB->next;
+    }
+
+    int gap = abs(lenA - lenB);
+
+//判断是否有交点
+    if(curA != curB)
+    return NULL;
+
+
+struct ListNode *shortlist = headA,*longlist = headB;
+if(lenA > lenB)
+{
+    longlist = headA;
+    shortlist = headB;
+}
+
+//长的链表先走差距步
+while(gap--)
+{
+    longlist = longlist->next;
+}
+
+while(shortlist != longlist)
+{
+    shortlist = shortlist->next;
+    longlist = longlist->next;
+}
+
+return shortlist;
+
+
+}
