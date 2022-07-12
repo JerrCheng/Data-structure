@@ -1,0 +1,60 @@
+struct Node* copyRandomList(struct Node* head) 
+{
+    struct Node* cur = head;
+ 
+    while(cur)//创建结点链接到后面
+    {
+        struct Node* copy = (struct Node*)malloc(sizeof(struct Node));
+        copy->val = cur->val;
+ 
+        copy->next = cur->next;
+        cur->next = copy;
+ 
+        cur = copy->next;
+    }	
+ 
+    cur = head;
+ 
+    //链接随机指针 copy->random = cur->random->next
+    while(cur)
+    {
+        struct Node* copy = cur->next;
+ 
+        if(cur->random == NULL)
+        {
+            copy->random = NULL;
+        }
+        else
+        {
+            copy->random = cur->random->next;
+        }
+ 
+        cur = copy->next;
+    }
+ 
+    cur = head;
+    //尾插
+    struct Node* copyhead = NULL;
+    struct Node* copytail = NULL;
+ 
+    while(cur)
+    {
+        struct Node* copy = cur->next;
+        struct Node* next = copy->next;
+ 
+        if(copytail == NULL)
+        {
+            copyhead = copytail = copy;
+        }
+        else
+        {
+            copytail->next = copy;
+            copytail = copytail->next;
+        }
+ 
+        cur->next = next;
+        cur = next;
+    }
+ 
+    return copyhead;
+}
