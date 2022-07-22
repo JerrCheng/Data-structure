@@ -1,0 +1,39 @@
+bool isSameTree(struct TreeNode* p, struct TreeNode* q)
+{
+    //如果两个都为空，返回true
+    if(p == NULL && q == NULL)
+    {
+        return true;
+    }
+    //两者一个真，返回false
+    if(p == NULL || q == NULL)
+    {
+        return false;
+    }
+    //两者都不为空，并且值不相等，返回false
+    if(p->val != q->val)
+    {
+        return false;
+    }
+    
+    //同时迭代左子树和右子树，并且两者都为真
+    return isSameTree(p->left,q->left) && isSameTree(p->right,q->right);
+}
+ 
+bool isSubtree(struct TreeNode* root, struct TreeNode* subRoot)
+{
+    //根节点初始不为NULL，后续访问到NULL，直接返回false
+    if(root == NULL)
+    {
+        return false;
+    }
+ 
+    //从根节点开始判断，每个子树是否和subRoot是相同的子树。
+    if(isSameTree(root,subRoot))
+    {
+        return true;
+    }
+ 
+    //如果左树和右树上有一个是和subRoot相同的子树就返回。
+    return isSubtree(root->left,subRoot) || isSubtree(root->right,subRoot);
+}
