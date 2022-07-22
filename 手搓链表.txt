@@ -1,0 +1,22 @@
+int main()
+{
+	struct ListNode* n1 = (struct ListNode*)malloc(sizeof(struct ListNode));
+	assert(n1);
+ 
+	struct ListNode* n2 = (struct ListNode*)malloc(sizeof(struct ListNode));
+	assert(n2);
+ 
+	struct ListNode* n3 = (struct ListNode*)malloc(sizeof(struct ListNode));
+	assert(n3);
+ 
+	n1->val = 1;
+	n2->val = 2;
+	n3->val = 3;
+ 
+	n1->next = n2;
+	n2->next = n3;
+	n3->next = NULL;
+ 
+ 
+	return 0;
+}
