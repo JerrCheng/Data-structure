@@ -1,0 +1,62 @@
+法一：遍历
+bool flag = true;//定义布尔值
+ 
+void PreOrderCompare(struct TreeNode *root,int val)
+{
+    if(root == NULL || flag == false)//如果为空或者布尔值为false就返回
+    {
+        return;
+    }
+ 
+    if(root->val != val)//如果结点值不一样，bool值改为false
+    {
+        flag = false;
+        return ;
+    }
+ 
+    PreOrderCompare(root->left,val);
+    PreOrderCompare(root->right,val);
+ 
+}
+ 
+bool isUnivalTree(struct TreeNode* root)
+{
+    if(root == NULL)
+    {
+        return true;
+    }
+ 
+    flag = true;//手动把布尔值置为true
+    PreOrderCompare(root,root->val);
+    return flag;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+法二：
+bool isUnivalTree(struct TreeNode* root){
+    if(root == NULL)
+    return true;
+
+    if(root->left && root->left->val != root->val)
+    return false;
+
+    if(root->right && root->right->val != root->val)
+    return false;
+
+    return isUnivalTree(root->left) && isUnivalTree(root->right);
+    
+
+}
