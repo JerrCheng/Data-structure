@@ -1,0 +1,58 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <assert.h>
+ 
+typedef char BTDataType;
+typedef struct BinaryTreeNode//创建树
+{
+	BTDataType data;
+	struct BinaryTreeNode* left;
+	struct BinaryTreeNode* right;
+}BTNode;
+ 
+BTNode* BuyNode(BTDataType x)//创建树的节点
+{
+	BTNode* node = (BTNode *)malloc(sizeof(BTNode));
+	assert(node);
+ 
+	node->data = x;
+	node->left = node->right = NULL;
+ 
+	return node;
+}
+ 
+BTNode* CreatBinaryTree(char* arr,int* pi)//传入数组和下标的地址
+{
+    if(arr[(*pi)] == '#')
+    {
+        (*pi)++;
+        return NULL;
+    }
+    
+    BTNode* root = BuyNode(arr[(*pi)++]);//先序
+    root->left = CreatBinaryTree(arr,pi);
+    root->right = CreatBinaryTree(arr,pi);
+    
+    return root;
+}
+ 
+void InOrder(BTNode* root)//中序打印
+{
+    if(root == NULL)
+    {
+        return ;
+    }
+    InOrder(root->left);
+    printf("%c ",root->data);
+    InOrder(root->right);
+}
+ 
+int main ()
+{
+    char arr[101];
+    scanf("%s",arr);//接收值
+    int i = 0;
+    BTNode* root = CreatBinaryTree(arr,&i);
+    InOrder(root);
+    
+}
