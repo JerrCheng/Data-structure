@@ -1,0 +1,30 @@
+ int TreeSize(struct TreeNode* root)
+ {
+     return root == NULL?0:TreeSize(root->left) + TreeSize(root->right)+1;
+ }
+
+void  postorder(struct TreeNode* root,int *a,int *pi)
+{
+    if(root == NULL)
+    return;
+
+    postorder(root->left,a,pi);
+   
+
+    postorder(root->right,a,pi);
+
+     a[(*pi)++] = root->val;
+
+}
+
+
+
+int* postorderTraversal(struct TreeNode* root, int* returnSize){
+*returnSize = TreeSize(root);
+        int *a =(int*) malloc(*returnSize * sizeof(int));
+        int i=0;
+
+        postorder(root,a,&i);
+
+        return a;
+}
