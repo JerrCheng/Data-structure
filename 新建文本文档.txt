@@ -1,0 +1,123 @@
+//建立大根堆
+void CreatHeap(int a[],int n) 
+{ 
+    for(int i=n/2;i>=1;i--) 
+    { 
+        HeapAdjust(a,i,n); 
+    }
+}
+ 
+//调整堆
+void HeapAdjust(int a[],int i,int n) 
+{ 
+    int largest=i; 
+    int lchild=2*i; 
+    int rchild=2*i+1; 
+    if(i<=n/2) 
+    { 
+        if(lchild<=n&&a[lchild]>a[largest]) 
+        { 
+             largest=lchild; 
+        } 
+        if(rchild<=n&&a[rchild]>a[largest]) 
+        { 
+             largest=rchild; 
+        } 
+        if(largest!=i) 
+        { 
+            swap(a[i],a[largest]); 
+            HeapAdjust(a,largest,n); 
+        } 
+    } 
+}
+ 
+//堆排序
+void HeapSort(int a[],int n) 
+{ 
+    CreatHeap(a,n); 
+    for(int i=n;i>=1;i--) 
+    { 
+        swap(a[1],a[i]); 
+        HeapAdjust(a,1,i-1); 
+    }
+}
+
+/////////////////////////////////////////////
+#include <stdio.h>
+#include <stdlib.h>
+
+// 定义链表的结构体
+struct node {
+    int data;
+    struct node *next;
+};
+
+// 快速查找函数：在链表中查找指定的值
+// 输入：链表的头指针，查找的目标数值
+// 输出：找到的节点指针，没有找到返回 NULL
+struct node *quick_search(struct node *head, int target) {
+    struct node *p = head;
+    while (p != NULL) {
+        if (p->data == target) {
+            return p;
+        }
+        p = p->next;
+    }
+    return NULL;
+}
+
+// 测试函数，创建一个链表，并查找链表中的某个元素
+int main()
+{
+    // 创建一个含有10个元素的链表
+    struct node *head = (struct node *)malloc(sizeof(struct node));
+    struct node *p = head;
+    for (int i = 0; i < 10; i++) {
+        p->data = i;
+        if (i == 9) {
+            p->next = NULL;
+        } else {
+            p->next = (struct node *)malloc(sizeof(struct node));
+            p = p->next;
+        }
+    }
+
+    // 查找链表中的某个元素
+    int target = 5;
+    p = quick_search(head, target);
+    if (p == NULL) {
+        printf("Not Found\n");
+    } else {
+        printf("Find %d\n", p->data);
+    }
+///////////////////////////////////////////////////
+#include <stdio.h>
+#include <stdlib.h>
+
+// 交换叶子节点
+void swapLeaves(struct Node* root) 
+{ 
+    if (root == NULL) 
+        return; 
+  
+    if (root->left == NULL && root->right == NULL) 
+        return; 
+  
+    if (root->left != NULL && root->right != NULL) 
+    { 
+        struct Node* temp = root->left; 
+        root->left = root->right; 
+        root->right = temp; 
+    } 
+    else
+    { 
+        if (root->left == NULL) 
+            root->left = root->right; 
+        else
+            root->right = root->left; 
+    } 
+ 
+    // 递归调用函数
+    swapLeaves(root->left); 
+    swapLeaves(root->right); 
+} 
