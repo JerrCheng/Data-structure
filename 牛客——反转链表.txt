@@ -1,0 +1,35 @@
+/*
+struct ListNode {
+    int val;
+    struct ListNode *next;
+    ListNode(int x) :
+            val(x), next(NULL) {
+    }
+};*/
+
+#include<vector>
+class Solution {
+  public:
+    ListNode* ReverseList(ListNode* pHead) {
+        if (pHead == nullptr)
+            return nullptr;
+
+        vector<int> val;
+        ListNode* p = pHead;
+
+        while (p) {
+            val.push_back(p->val);
+            p = p->next;
+        }
+        int l = val.size() - 1;
+        ListNode* result = new ListNode(val[l]);
+        ListNode* p1 = result;
+        while (l > 0) {
+            l--;
+            p1->next = new ListNode(val[l]);
+            p1 = p1->next;
+        }
+        return result;
+
+    }
+};
