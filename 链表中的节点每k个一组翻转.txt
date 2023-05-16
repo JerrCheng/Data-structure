@@ -1,0 +1,43 @@
+/**
+ * struct ListNode {
+ *	int val;
+ *	struct ListNode *next;
+ * };
+ */
+
+class Solution {
+public:
+    /**
+     * 
+     * @param head ListNode类 
+     * @param k int整型 
+     * @return ListNode类
+     */
+    ListNode* reverseKGroup(ListNode* head, int k) {
+
+         //遍历到尾部
+        ListNode* tail = head;
+        for(int i= 0;i<k;++i)
+        {
+            if(tail == NULL)
+            return head;
+
+            tail = tail->next;
+        }
+
+        //反转
+        ListNode* pre = NULL;
+        ListNode* cur = head;
+        while(cur!= tail)
+        {
+            ListNode* temp = cur->next;
+            cur->next = pre;
+            pre = cur;
+            cur = temp;
+        }
+
+        head->next = reverseKGroup(tail,k);
+        return pre;
+       
+    }
+};
