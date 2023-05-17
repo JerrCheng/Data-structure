@@ -1,0 +1,52 @@
+
+/*
+struct ListNode {
+    int val;
+    struct ListNode *next;
+    ListNode(int x) :
+        val(x), next(NULL) {
+    }
+};
+*/
+class Solution {
+  public:
+    ListNode* IsLoop(ListNode* head) {
+        //先判断是否有环
+        if (head == NULL)
+            return NULL;
+        //快慢双指针
+        ListNode* fast = head;
+        ListNode* slow = head;
+        //如果没环快指针会先到链表尾
+        while (fast != NULL && fast->next != NULL)
+         {
+            //快指针移动两步
+            fast = fast->next->next;
+            //慢指针移动一步
+            slow = slow->next;
+            //相遇则有环
+            if (fast == slow)
+                //返回相遇的地方
+                return slow;
+        }
+        return NULL;
+    }
+
+    ListNode* EntryNodeOfLoop(ListNode* pHead) {
+        ListNode* slow = IsLoop(pHead);
+        if(slow == NULL)
+        return NULL;
+
+        //快指针回到表头
+        ListNode* fast = pHead;
+
+        while(fast != slow)
+        {
+            fast = fast->next;
+            slow = slow->next;
+        }
+
+        return slow;
+
+    }
+};
