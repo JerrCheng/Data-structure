@@ -1,0 +1,60 @@
+方法一：快慢指针
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+    //添加头结点，当前节点，前序节点
+       ListNode* ret = new ListNode(-1);
+       ret->next = head;
+       ListNode*slow = head;
+       ListNode* pre = ret;
+       ListNode* fast = head;
+
+    // 快指针先走n步
+    while(n--)
+    {
+        fast=fast->next;
+    }
+    //快慢指针同时走，等到快指针走到尾部，慢指针到达第n个节点  
+    while(fast!=NULL)
+    {
+        fast=fast->next;
+        pre = slow;
+        slow=slow->next;
+    }
+    pre->next = slow->next;
+
+    return ret->next;
+    }
+};
+
+
+方法二：长度
+先遍历一遍计算长度L，要删除倒数第n个节点，就要找到第L-n
+class Solution {
+public:
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+        //记录链表长度
+        int length = 0; 
+        //添加表头
+        ListNode* res = new ListNode(-1); 
+        res->next = head;
+        //当前节点
+        ListNode* cur = head; 
+        //前序节点
+        ListNode* pre = res; 
+        //找到链表长度
+        while(cur != NULL){ 
+            length++;
+            cur = cur->next;
+        }
+        //回到头部
+        cur = head; 
+        //从头遍历找到倒数第n个位置
+        for(int i = 0; i < length - n; i++){ 
+            pre = cur;
+            cur = cur->next;
+        }
+        //删去倒数第n个节点
+        pre->next = cur->next; 
+        //返回去掉头节点
+        return res->next; 
+    }
+};
