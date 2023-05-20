@@ -1,0 +1,25 @@
+链表最难受的就是不能按照下标访问，只能逐个遍历，那像排序中常规的快速排序、堆排序都不能用了，只能用依次遍历的冒泡排序、选择排序这些。但是这些复杂度的排序方法太费时间了，我们可以将其转化成数组后再排序。
+
+具体做法：
+
+step 1：遍历链表，将节点值加入数组。
+step 2：使用内置的排序函数对数组进行排序。
+step 3：依次遍历数组和链表，按照位置将链表中的节点值修改为排序后的数组值。   
+
+ vector<int> nums;
+        ListNode* p = head;
+        //遍历链表，将节点值加入数组
+        while(p != NULL){
+            nums.push_back(p->val);
+            p = p->next;
+        }
+        p = head;
+        //对数组元素排序
+        sort(nums.begin(), nums.end());
+        //遍历数组
+        for(int i = 0; i < nums.size(); i++){
+            //将数组元素依次加入链表
+            p->val = nums[i];
+            p = p->next;
+        }
+        return head;
