@@ -1,0 +1,44 @@
+
+
+/**
+ * struct ListNode {
+ *	int val;
+ *	struct ListNode *next;
+ *	ListNode(int x) : val(x), next(nullptr) {}
+ * };
+ */
+class Solution {
+public:
+    /**
+     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+     *
+     * 
+     * @param head ListNode类 
+     * @return ListNode类
+     */
+    ListNode* oddEvenList(ListNode* head) {
+        
+        if(head == NULL)
+            return head;
+        
+        ListNode* even = head->next; //偶数
+        
+        ListNode* odd = head; //奇数
+        
+        //指向even开头
+        ListNode* evenhead = even;
+        while(even != NULL && even->next != NULL){
+            //odd连接even的后一个，即奇数位
+            odd->next = even->next;
+            //odd进入后一个奇数位
+            odd = odd->next;
+            //even连接后一个奇数的后一位，即偶数位
+            even->next = odd->next;
+            //even进入后一个偶数位
+            even = even->next;
+        }
+        //even整体接在odd后面
+        odd->next = evenhead;
+        return head;
+    }
+};
