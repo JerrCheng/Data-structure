@@ -1,0 +1,70 @@
+方法一：数组反转，因为是回文结构，所以正向遍历和反向遍历应该相同，所以分别将其放入数组中进行比较
+
+/**
+ * struct ListNode {
+ *	int val;
+ *	struct ListNode *next;
+ * };
+ */
+
+#include <vector>
+class Solution {
+public:
+    /**
+     * 
+     * @param head ListNode类 the head
+     * @return bool布尔型
+     */
+    bool isPail(ListNode* head) {
+        vector<int> num;
+
+        //将元素放入数组中
+        while(head != NULL)
+        {
+            num.push_back(head->val);
+            head = head->next;
+        }
+
+        //用来放逆置过来的数组
+        vector<int> tmp = num;
+        reverse(tmp.begin(),tmp.end());
+        for(int i=0;i<num.size();++i)
+        {
+            //正向遍历和反向遍历相同
+            if(num[i] != tmp[i] )
+                return false;
+        }
+
+        return true;
+
+        
+    }
+};
+
+
+方法二：双指针，将遍历一次的放入数组后，使用下标访问，两个下标代表两个指针，两个指针分别从数组首尾开始遍历，左指针指向开头，从左到右，右指针指向数组末尾，从右到左，依次比较元素是否相同。如果有不一样，则不是回文结构。否则遍历到两个指针相遇就好了
+
+
+class Solution {
+public:
+    bool isPail(ListNode* head) {
+        vector<int> nums;
+        //将链表元素取出一次放入数组
+        while(head != NULL){ 
+            nums.push_back(head->val);
+            head = head->next;
+        }
+        //双指针指向首尾
+        int left = 0; 
+        int right = nums.size() - 1;
+        //分别从首尾遍历，代表正序和逆序
+        while(left <= right){ 
+            //如果不一致就是不为回文
+            if(nums[left] != nums[right]) 
+                return false;
+            left++;
+            right--;
+        }
+        return true;
+    }
+};
