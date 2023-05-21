@@ -1,0 +1,37 @@
+/**
+ * struct ListNode {
+ *	int val;
+ *	struct ListNode *next;
+ * };
+ */
+
+class Solution {
+public:
+    /**
+     * 
+     * @param head ListNode类 
+     * @return ListNode类
+     */
+    ListNode* deleteDuplicates(ListNode* head) {
+        //空链表
+        if(head == NULL)
+            return NULL;
+        ListNode* ret = new ListNode(0);
+        //在链表前加一个表头，防止第一个节点重复需要删除
+        ret->next = head;
+        ListNode* cur = ret;
+        while(cur->next != NULL && cur->next->next != NULL){
+            //遇到相邻两个节点值相同
+            if(cur->next->val == cur->next->next->val){
+                int temp = cur->next->val;
+                //将所有相同的都跳过
+                while (cur->next != NULL && cur->next->val == temp)
+                    cur->next = cur->next->next;
+            }
+            else
+                cur = cur->next;
+        }
+        //返回时去掉表头
+        return ret->next;
+    }
+};
