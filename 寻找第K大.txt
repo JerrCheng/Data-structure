@@ -1,0 +1,37 @@
+本题需要使用快速排序的思想，快速排序：每次移动，可以找到一个标杆元素，然后将大于它的移到左边，小于它的移到右边，由此整个数组划分成为两部分，然后分别对左边和右边使用同样的方法进行排序，不断划分左右子段，直到整个数组有序。这也是分治的思想，将数组分化成为子段，分而治之。
+
+class Solution {
+  public:
+    int quicksort(vector<int>& a, int low, int high, int k) {
+        //随机快排划分
+        swap(a[low], a[rand() % (high - low + 1) + low]);
+        int v = a[low];
+        int i = low + 1;
+        int j = high;
+        while (true) {
+            //小于标杆的在右
+            while (j >= low + 1 && a[j] < v)
+                j--;
+            //大于标杆的在左
+            while (i <= high && a[i] > v)
+                i++;
+            if (i > j)
+                break;
+            swap(a[i], a[j]);
+            i++;
+            j--;
+        }
+        swap(a[low], a[j]);
+        //从0开始，所以为第j+1大
+        if (j + 1 == k)
+            return a[j];
+        //继续划分
+        else if (j + 1 < k)
+            return quicksort(a, j + 1, high, k);
+        else
+            return quicksort(a, low, j - 1, k);
+    }
+    int findKth(vector<int> a, int n, int K) {
+        return quicksort(a, 0, n - 1, K);
+    }
+};
