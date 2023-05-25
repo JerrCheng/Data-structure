@@ -1,0 +1,46 @@
+step 1：用一数组存储输入的数据流。
+step 2：Insert函数在插入的同时，遍历之前存储在数组中的数据，按照递增顺序依次插入，如此一来，加入的数据流便是有序的。
+step 3：GetMedian函数可以根据下标直接访问中位数，分为数组为奇数个元素和偶数个元素两种情况。记得需要类型转换为double。
+
+class Solution {
+  public:
+  vector<int>val;
+    void Insert(int num) {
+
+            //加入数据
+        if(val.empty())
+        {
+            val.push_back(num);
+        }
+
+        else 
+        {
+            int i = 0;
+            for(;i<val.size();++i)
+            {
+                if(num <= val[i])
+                 break;
+            }
+        val.insert(val.begin()+i,num);
+
+        }
+    }
+
+
+    double GetMedian() {
+        int n = val.size();
+        //奇数个数字
+        if (n % 2 == 1) {
+            //类型转换
+            return double(val[n / 2]);
+        }
+        //偶数个数字
+        else {
+            double a = val[n / 2];
+            double b = val[n / 2 - 1];
+            return (a + b) / 2;
+
+        }
+    }
+
+    };
