@@ -1,0 +1,30 @@
+
+step 1：准备两个指针，一个在字符串首，一个在字符串尾。
+step 2：在首的指针往后走，在尾的指针往前走，依次比较路过的两个字符是否相等，若是不相等则直接就不是回文。
+step 3：直到两指针在中间相遇，都还一致就是回文。因为首指针到了后半部分，走过的正好是尾指针走过的路，二者只是交换了位置，比较相等还是一样的。
+
+
+class Solution {
+  public:
+    /**
+     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+     *
+     * @param str string字符串 待判断的字符串
+     * @return bool布尔型
+     */
+    bool judge(string str) {
+        //首指针
+        int left = 0;
+        //尾指针
+        int right = str.length() - 1;
+        //首尾往中间靠
+        while (left < right) {
+            //比较前后是否相同
+            if (str[left] != str[right])
+                return false;
+            left++;
+            right--;
+        }
+        return true;
+    }
+};
