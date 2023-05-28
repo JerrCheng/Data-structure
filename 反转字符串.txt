@@ -1,0 +1,24 @@
+step 1：准备两个指针，从字符串一首一尾同时出发。
+step 2：每次交换二者指向的字符，直到二者相遇，这样刚好可以将字符串首尾交换，完成反转。
+#include <algorithm>
+class Solution {
+  public:
+    /**
+     * 反转字符串
+     * @param str string字符串
+     * @return string字符串
+     */
+    string solve(string str) {
+        //左右双指针
+        int left = 0;
+        int right = str.length() - 1;
+        //两指针往中间靠
+        while (left < right) {
+            //交换两边字符
+            swap(str[left], str[right]);
+            left++;
+            right--;
+        }
+        return str;
+    }
+};
